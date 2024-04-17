@@ -37,7 +37,7 @@ class InventoryManagementSystem:
         self.lbl_clock.place(x=0, y=70, relwidth=1, height=30)
         #  ===left_menu==
         self.MenuLogo = Image.open("images/menu_im.png")
-        self.MenuLogo = self.MenuLogo.resize((200, 200), Image.ANTIALIAS)
+        self.MenuLogo = self.MenuLogo.resize((200, 200), Image.LANCZOS)
         self.MenuLogo = ImageTk.PhotoImage(self.MenuLogo)
         leftMenu = Frame(self.root, bd=2, relief=RIDGE, bg="white")
         leftMenu.place(x=0, y=102, width=200, height=565)
