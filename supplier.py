@@ -28,22 +28,20 @@ class SupplierClass:
 
 
         # ====search_frame=====
-        searchFrame = LabelFrame(self.root, text="Search Supplier", font=("goudy old style", 12, "bold"), bd=2,
-                                 relief=RIDGE, bg="white")
-        searchFrame.place(x=570, y=50, width=400, height=50)
+        
         # ==options===
-        self.lbl_search = Label(searchFrame, text="Search by Invoice number",bg="white",
+        self.lbl_search = Label(self.root, text=" Invoice number",bg="white",
                                 font=("times new roman", 15))
-        self.lbl_search.place(x=10, y=10)
+        self.lbl_search.place(x=550, y=80)
 
 
-        self.txt_search = Entry(searchFrame, font=("goudy old style", 15),
+        self.txt_search = Entry(self.root, font=("goudy old style", 15),
                                 bg="lightyellow", textvariable=self.var_searchtxt)
-        self.txt_search.place(x=120, y=10)
-        btn_search = Button(searchFrame, text="Search", command=self.search, font=employee_form_font, bg="#4caf50",
+        self.txt_search.place(x=700, y=80)
+        btn_search = Button(self.root, text="Search", command=self.search, font=employee_form_font, bg="#4caf50",
                             fg="white",
                             cursor="hand2")
-        btn_search.place(x=470, y=9, width=120, height=30)
+        btn_search.place(x=980, y=79, width=100, height=30)
         # ====title====
         title = Label(self.root, text="Supplier Details", font=("goudy old style", 20 ,"bold"), bg="#0f4d7d", fg="white")
         title.place(x=50, y=10, width=1000, height=40)
@@ -72,17 +70,17 @@ class SupplierClass:
         self.lbl_desc = Label(self.root, text="Description", font=employee_form_font, bg="white")
         self.lbl_desc.place(x=50, y=200)
         self.txt_desc = Text(self.root, font=employee_form_font, bg="lightyellow")
-        self.txt_desc.place(x=180, y=200, width=420, height=60)
+        self.txt_desc.place(x=180, y=200, width=420, height=120)
         # ===buttons====
 
         btn_add = Button(self.root, text="Save", command=self.add, font=employee_form_font, bg="#2196f3",
-                         fg="white", cursor="hand2").place(x=180, y=320, width=110, height=35)
+                         fg="white", cursor="hand2").place(x=180, y=370, width=110, height=35)
         btn_update = Button(self.root, text="Update", command=self.update, font=employee_form_font, bg="#4caf50",
-                            fg="white", cursor="hand2").place(x=300, y=320, width=110, height=35)
+                            fg="white", cursor="hand2").place(x=300, y=370, width=110, height=35)
         btn_delete = Button(self.root, text="Delete", command=self.delete, font=employee_form_font, bg="#f44336",
-                            fg="white", cursor="hand2").place(x=420, y=320, width=110, height=35)
+                            fg="white", cursor="hand2").place(x=420, y=370, width=110, height=35)
         btn_clear = Button(self.root, text="Clear", command=self.clear_input_field, font=employee_form_font,
-                           bg="#607d8b", fg="white", cursor="hand2").place(x=540, y=320, width=110, height=35)
+                           bg="#607d8b", fg="white", cursor="hand2").place(x=540, y=370, width=110, height=35)
 
         #====employee_details====
         emp_frame = Frame(self.root, bd=3, relief=RIDGE)
