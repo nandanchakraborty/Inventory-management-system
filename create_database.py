@@ -6,6 +6,8 @@ def create_db():
     con.commit()
     cur.execute("CREATE TABLE IF NOT EXISTS supplier(invoice INTEGER PRIMARY KEY AUTOINCREMENT,name text, contact text , desc text ) ")
     con.commit()
+    cur.execute("CREATE TABLE IF NOT EXISTS category(cid INTEGER PRIMARY KEY AUTOINCREMENT,name text)")
+    con.commit()
 
 
 create_db()    
