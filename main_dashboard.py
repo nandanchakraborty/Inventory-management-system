@@ -6,6 +6,7 @@ import sqlite3
 
 from employee import EmployeeClass
 from supplier import SupplierClass
+from Category import CategoryClass
 
 
 class InventoryManagementSystem:
@@ -22,7 +23,7 @@ class InventoryManagementSystem:
 
         #  ====title=====
         self.icon_title = PhotoImage(file="images/logo1.png")
-        self.title = Label(self.root, text="Inventory Management System", image=self.icon_title, compound=LEFT,
+        self       .title = Label(self.root, text="Inventory Management System", image=self.icon_title, compound=LEFT,
                            font=("times new roman", 40, "bold"),
                            bg="#010c48", fg="white", anchor="w", padx=20)
         self.title.place(x=0, y=0, relwidth=1, height=70)
@@ -58,7 +59,7 @@ class InventoryManagementSystem:
                               padx=5, anchor="w", font=("times new roman", 20, "bold"), bg="white", bd=3,
                               cursor="hand2")
         btn_supplier.pack(side=TOP, fill=X)
-        btn_category = Button(leftMenu, text="Category", image=self.icon_side, compound=LEFT, padx=5, anchor="w",
+        btn_category = Button(leftMenu, text="Category",command=self.Category, image=self.icon_side, compound=LEFT, padx=5, anchor="w",
                               font=("times new roman", 20, "bold"), bg="white", bd=3, cursor="hand2")
         btn_category.pack(side=TOP, fill=X)
         btn_product = Button(leftMenu, text="Product", image=self.icon_side, compound=LEFT, padx=5, anchor="w",
@@ -117,6 +118,9 @@ class InventoryManagementSystem:
     def supplier(self):
         self.new_win = Toplevel(self.root)
         self.new_obj = SupplierClass(self.new_win)
+    def Category(self):
+        self.new_win = Toplevel(self.root)
+        self.new_obj = CategoryClass(self.new_win)
 
     def get_table_data_count(self):
         """
@@ -125,11 +129,12 @@ class InventoryManagementSystem:
         con = sqlite3.connect(database=r'ims.db')
         cur = con.cursor()
         total_employee = 0
-        total_supplier = 50
+        total_supplier = 0
+
         try:
             total_employee = cur.execute("SELECT COUNT(*) FROM Employee").fetchone()[0]
-            # total_supplier = cur.execute("SELECT COUNT(*) FROM Employee").fetchone()[0]
-
+            total_supplier = cur.execute("SELECT COUNT(*) FROM supplier").fetchone()[0]
+            total_category = cur.execute("SELECT COUNT(*) FROM Category").fetchone()[0]
         except Exception as e:
             pass
         finally:
