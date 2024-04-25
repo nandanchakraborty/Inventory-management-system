@@ -116,14 +116,18 @@ class EmployeeClass:
         self.txt_salary.place(x=600, y=270, width=180)
         # ===buttons====
 
-        btn_add = Button(self.root, text="Save", command=self.add, font=employee_form_font, bg="#2196f3",
-                         fg="white", cursor="hand2").place(x=500, y=305, width=110, height=28)
-        btn_update = Button(self.root, text="Update", command=self.update, font=employee_form_font, bg="#4caf50",
-                            fg="white", cursor="hand2").place(x=620, y=305, width=110, height=28)
-        btn_delete = Button(self.root, text="Delete", command=self.delete, font=employee_form_font, bg="#f44336",
-                            fg="white", cursor="hand2").place(x=740, y=305, width=110, height=28)
-        btn_clear = Button(self.root, text="Clear", command=self.clear_input_field, font=employee_form_font,
-                           bg="#607d8b", fg="white", cursor="hand2").place(x=860, y=305, width=110, height=28)
+        btn_add = (Button(self.root, text="Save", command=self.add, font=employee_form_font, bg="#2196f3",
+                         fg="white", cursor="hand2")
+                   .place(x=500, y=305, width=110, height=28))
+        btn_update = (Button(self.root, text="Update", command=self.update, font=employee_form_font, bg="#4caf50",
+                            fg="white", cursor="hand2")
+                      .place(x=620, y=305, width=110, height=28))
+        btn_delete = (Button(self.root, text="Delete", command=self.delete, font=employee_form_font, bg="#f44336",
+                            fg="white", cursor="hand2")
+                      .place(x=740, y=305, width=110, height=28))
+        btn_clear = (Button(self.root, text="Clear", command=self.clear_input_field, font=employee_form_font,
+                           bg="#607d8b", fg="white", cursor="hand2")
+                      .place(x=860, y=305, width=110, height=28))
 
         #====employee_details====
         emp_frame = Frame(self.root, bd=3, relief=RIDGE)
