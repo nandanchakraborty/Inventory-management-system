@@ -8,6 +8,7 @@ from employee import EmployeeClass
 from supplier import SupplierClass
 from Category import CategoryClass
 from product import ProductClass
+from sales import SalesClass
 
 
 class InventoryManagementSystem:
@@ -66,7 +67,7 @@ class InventoryManagementSystem:
         btn_product = Button(leftMenu, text="Product",command=self.product, image=self.icon_side, compound=LEFT, padx=5, anchor="w",
                              font=("times new roman", 20, "bold"), bg="white", bd=3, cursor="hand2")
         btn_product.pack(side=TOP, fill=X)
-        btn_sales = Button(leftMenu, text="Sales", image=self.icon_side, compound=LEFT, padx=5, anchor="w",
+        btn_sales = Button(leftMenu, text="Sales",command=self.sales, image=self.icon_side, compound=LEFT, padx=5, anchor="w",
                            font=("times new roman", 20, "bold"), bg="white", bd=3, cursor="hand2")
         btn_sales.pack(side=TOP, fill=X)
         btn_exit = Button(leftMenu, text="Exit", image=self.icon_side, compound=LEFT, padx=5, anchor="w",
@@ -126,6 +127,10 @@ class InventoryManagementSystem:
     def product(self):
         self.new_win = Toplevel(self.root)
         self.new_obj = ProductClass(self.new_win)
+
+    def sales(self):
+        self.new_win = Toplevel(self.root)
+        self.new_obj = SalesClass(self.new_win)
 
     def get_table_data_count(self):
         """
