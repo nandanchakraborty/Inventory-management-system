@@ -7,6 +7,7 @@ import sqlite3
 from employee import EmployeeClass
 from supplier import SupplierClass
 from Category import CategoryClass
+from product import ProductClass
 
 
 class InventoryManagementSystem:
@@ -23,7 +24,7 @@ class InventoryManagementSystem:
 
         #  ====title=====
         self.icon_title = PhotoImage(file="images/logo1.png")
-        self       .title = Label(self.root, text="Inventory Management System", image=self.icon_title, compound=LEFT,
+        self.title = Label(self.root, text="Inventory Management System", image=self.icon_title, compound=LEFT,
                            font=("times new roman", 40, "bold"),
                            bg="#010c48", fg="white", anchor="w", padx=20)
         self.title.place(x=0, y=0, relwidth=1, height=70)
@@ -62,7 +63,7 @@ class InventoryManagementSystem:
         btn_category = Button(leftMenu, text="Category",command=self.Category, image=self.icon_side, compound=LEFT, padx=5, anchor="w",
                               font=("times new roman", 20, "bold"), bg="white", bd=3, cursor="hand2")
         btn_category.pack(side=TOP, fill=X)
-        btn_product = Button(leftMenu, text="Product", image=self.icon_side, compound=LEFT, padx=5, anchor="w",
+        btn_product = Button(leftMenu, text="Product",command=self.product, image=self.icon_side, compound=LEFT, padx=5, anchor="w",
                              font=("times new roman", 20, "bold"), bg="white", bd=3, cursor="hand2")
         btn_product.pack(side=TOP, fill=X)
         btn_sales = Button(leftMenu, text="Sales", image=self.icon_side, compound=LEFT, padx=5, anchor="w",
@@ -121,6 +122,10 @@ class InventoryManagementSystem:
     def Category(self):
         self.new_win = Toplevel(self.root)
         self.new_obj = CategoryClass(self.new_win)
+
+    def product(self):
+        self.new_win = Toplevel(self.root)
+        self.new_obj = ProductClass(self.new_win)
 
     def get_table_data_count(self):
         """
