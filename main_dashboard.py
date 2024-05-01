@@ -15,6 +15,7 @@ class InventoryManagementSystem:
     """
     Base class for inventory management system
     """
+
     def __init__(self, r):
         self.root = r
         self.root.geometry("1350x700+0+0")
@@ -30,7 +31,7 @@ class InventoryManagementSystem:
                            bg="#010c48", fg="white", anchor="w", padx=20)
         self.title.place(x=0, y=0, relwidth=1, height=70)
         #  ====btn_logout==
-        self.btn_logout = Button(self.root, text="Logout", font=("times new roman", 15, "bold"), bg="yellow",
+        self.btn_logout = Button(self.root, text="Logout",command=self.logout, font=("times new roman", 15, "bold"), bg="yellow",
                                  cursor="hand2")
         self.btn_logout.place(x=1150, y=10, height=50, width=150)
         #  ====clock===
@@ -61,13 +62,16 @@ class InventoryManagementSystem:
                               padx=5, anchor="w", font=("times new roman", 20, "bold"), bg="white", bd=3,
                               cursor="hand2")
         btn_supplier.pack(side=TOP, fill=X)
-        btn_category = Button(leftMenu, text="Category",command=self.Category, image=self.icon_side, compound=LEFT, padx=5, anchor="w",
+        btn_category = Button(leftMenu, text="Category", command=self.Category, image=self.icon_side, compound=LEFT,
+                              padx=5, anchor="w",
                               font=("times new roman", 20, "bold"), bg="white", bd=3, cursor="hand2")
         btn_category.pack(side=TOP, fill=X)
-        btn_product = Button(leftMenu, text="Product",command=self.product, image=self.icon_side, compound=LEFT, padx=5, anchor="w",
+        btn_product = Button(leftMenu, text="Product", command=self.product, image=self.icon_side, compound=LEFT,
+                             padx=5, anchor="w",
                              font=("times new roman", 20, "bold"), bg="white", bd=3, cursor="hand2")
         btn_product.pack(side=TOP, fill=X)
-        btn_sales = Button(leftMenu, text="Sales",command=self.sales, image=self.icon_side, compound=LEFT, padx=5, anchor="w",
+        btn_sales = Button(leftMenu, text="Sales", command=self.sales, image=self.icon_side, compound=LEFT, padx=5,
+                           anchor="w",
                            font=("times new roman", 20, "bold"), bg="white", bd=3, cursor="hand2")
         btn_sales.pack(side=TOP, fill=X)
         btn_exit = Button(leftMenu, text="Exit", image=self.icon_side, compound=LEFT, padx=5, anchor="w",
@@ -111,7 +115,6 @@ class InventoryManagementSystem:
          Time: {current_time}")
         self.root.after(1000, self.update_clock)  # Update
 
-
     # #====================================
     def employee(self):
         self.new_win = Toplevel(self.root)
@@ -120,6 +123,7 @@ class InventoryManagementSystem:
     def supplier(self):
         self.new_win = Toplevel(self.root)
         self.new_obj = SupplierClass(self.new_win)
+
     def Category(self):
         self.new_win = Toplevel(self.root)
         self.new_obj = CategoryClass(self.new_win)
@@ -151,7 +155,8 @@ class InventoryManagementSystem:
             con.close()
         return total_employee, total_supplier
 
-
+    def logout(self):
+        self.root.destroy()
 
 
 if __name__ == "__main__":

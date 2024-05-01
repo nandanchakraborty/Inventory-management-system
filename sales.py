@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import ttk, messagebox
 from PIL import Image, ImageTk
+import os
 
 import sqlite3
 
@@ -23,6 +24,7 @@ class SalesClass:
         self.root.focus_force()
 
         self.var_invoice = StringVar()
+        self.bill_list = []
 
         # title==============
 
@@ -34,10 +36,10 @@ class SalesClass:
                        .place(x=50, y=100))
         txt_invoice = (Entry(self.root, textvariable=self.var_invoice, font=("times new roman", 15), bg="lightyellow")
                        .place(x=160, y=100, width=180, height=28))
-        btn_search = (Button(self.root, text="Search", font=("times new roman", 15, "bold"), bg="#2196fc", fg="white",
+        btn_search = (Button(self.root, text="Search", command=self.search, font=("times new roman", 15, "bold"), bg="#2196fc", fg="white",
                              cursor="hand2")
                       .place(x=360, y=100, width=120, height=28))
-        btn_clear = (Button(self.root, text="Clear", font=("times new roman", 15, "bold"), bg="lightgray",
+        btn_clear = (Button(self.root, text="Clear",command= self.clear, font=("times new roman", 15, "bold"), bg="lightgray",
                             cursor="hand2")
                      .place(x=490, y=100, width=120, height=28))
         # bill list
@@ -48,6 +50,7 @@ class SalesClass:
         scrolly.pack(side=RIGHT, fill=Y)
         scrolly.config(command=self.sales_list.yview)
         self.sales_list.pack(fill=BOTH, expand=1)
+        self.sales_list.bind("<ButtonRelease-1>", self.get_data)
         # bill area
         bill_Frame = Frame(self.root, bd=3, relief=RIDGE)
         bill_Frame.place(x=280, y=140, width=410, height=330)
@@ -70,6 +73,46 @@ class SalesClass:
 
         lbl_image = Label(self.root, image=self.bill_photo, bd=0)
         lbl_image.place(x=700, y=110)
+        self.show()
+        # =====================
+
+    def show(self):
+
+        self.sales_list.delete(0, END)
+        # print(os.listdir('Bill'))
+        for i in os.listdir('Bill'):
+            if i.split('.')[-1] == 'txt':
+                self.sales_list.insert(END, i)
+                self.bill_list.append(i.split('.')[0])
+
+    def get_data(self, ev):
+        row = self.sales_list.curselection()
+        fill_name = self.sales_list.get(first=row[0])
+        # print(fill_name)
+        self.bill_area.delete('1.0', END)
+        fp = open(f'Bill/{fill_name}', 'r')
+        for i in fp:
+            self.bill_area.insert(END, i)
+        fp.close()
+
+    def search(self):
+        if self.var_invoice.get() == "":
+            messagebox.showerror("Error", "Invoice number should be required")
+        else:
+            if self.var_invoice.get() in self.bill_list:
+                fp = open(f'Bill/{self.var_invoice.get()}.txt', 'r')
+                self.bill_area.delete('1.0', END)
+                for i in fp:
+                    self.bill_area.insert(END, i)
+                fp.close()
+            else:
+                messagebox.showerror("error","Invalid Invoice number",parent= self.root)
+
+            self.var_invoice.set('')
+
+    def clear(self):
+        self.show()
+        self.bill_area.delete('1.0', END)
 
 
 if __name__ == "__main__":
