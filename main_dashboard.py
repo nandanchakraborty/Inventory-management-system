@@ -3,6 +3,8 @@ from tkinter import *
 
 from PIL import Image, ImageTk
 import sqlite3
+import os
+from tkinter import messagebox
 
 from employee import EmployeeClass
 from supplier import SupplierClass
@@ -31,7 +33,8 @@ class InventoryManagementSystem:
                            bg="#010c48", fg="white", anchor="w", padx=20)
         self.title.place(x=0, y=0, relwidth=1, height=70)
         #  ====btn_logout==
-        self.btn_logout = Button(self.root, text="Logout",command=self.logout, font=("times new roman", 15, "bold"), bg="yellow",
+        self.btn_logout = Button(self.root, text="Logout", command=self.logout, font=("times new roman", 15, "bold"),
+                                 bg="yellow",
                                  cursor="hand2")
         self.btn_logout.place(x=1150, y=10, height=50, width=150)
         #  ====clock===
@@ -81,25 +84,27 @@ class InventoryManagementSystem:
         # ##content===
         self.lbl_employee = Label(self.root, text="Total Employee\n[ 0 ]", bd=5, relief=RIDGE, bg="#33bbf9", fg="white",
                                   font=("goudy old style", 20, "bold"))
+
         self.lbl_employee.place(x=300, y=120, height=150, width=300)
 
         self.lbl_supplier = Label(self.root, text="Total Supplier\n[ 0 ]", bd=5, relief=RIDGE, bg="#33bbf9", fg="white",
                                   font=("goudy old style", 20, "bold"))
-        t_em, t_su = self.get_table_data_count()
-        self.lbl_supplier.config(text=f"Total Supplier\n {t_su}")
 
         self.lbl_supplier.place(x=650, y=120, height=150, width=300)
 
         self.lbl_category = Label(self.root, text="Total Category\n[ 0 ]", bd=5, relief=RIDGE, bg="#33bbf9", fg="white",
                                   font=("goudy old style", 20, "bold"))
+
         self.lbl_category.place(x=1000, y=120, height=150, width=300)
 
         self.lbl_product = Label(self.root, text="Total product\n[ 0 ]", bd=5, relief=RIDGE, bg="#33bbf9", fg="white",
                                  font=("goudy old style", 20, "bold"))
+
         self.lbl_product.place(x=300, y=300, height=150, width=300)
 
         self.lbl_sales = Label(self.root, text="Total Sales\n[ 0 ]", bd=5, relief=RIDGE, bg="#33bbf9", fg="white",
                                font=("goudy old style", 20, "bold"))
+
         self.lbl_sales.place(x=650, y=300, height=150, width=300)
 
         self.update_clock()
