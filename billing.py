@@ -1,6 +1,8 @@
 import os
 import sqlite3
 import tempfile
+import subprocess
+import platform
 import time
 from tkinter import *
 from tkinter import ttk, messagebox
@@ -197,7 +199,8 @@ class BillClass:
         # --------------Cart Frame------------------
         Cart_Frame = Frame(Cal_Cart_Frame, bd=3, relief=RIDGE)
         Cart_Frame.place(x=300, y=8, width=320, height=342)
-        self.cartTitle = Label(Cart_Frame, text="Cart Products:[0]", font=("goudy old style", 10), bg="lightgray")
+        self.cartTitle = Label(Cart_Frame, text="Cart  Total Products:[0]", font=("goudy old style", 10),
+                               bg="lightgray")
         self.cartTitle.pack(side=TOP, fill=X)
 
         scrolly = Scrollbar(Cart_Frame, orient=VERTICAL)
@@ -450,7 +453,7 @@ class BillClass:
             # --------------------Bill Bottom--------------------------
             self.bill_bottom()
 
-            fp = open(f'bill/{str(self.invoice)}.txt', 'w')
+            fp = open(f'Bill/{str(self.invoice)}.txt', 'w')
             fp.write(self.txt_bill_area.get('1.0', END))
             fp.close()
             messagebox.showinfo('Saved', "Bill has been Saved", parent=self.root)
@@ -475,7 +478,7 @@ Bill No. {str(self.invoice)}\t\t\tDate: {str(time.strftime("%d/%m/%Y"))}
     def bill_bottom(self):
         bill_bottom_temp = f'''
 {str("=" * 47)}
-Amount\t\tTk.{self.bill_amnt}
+ Amount\t\t\t\tTk.{self.bill_amnt}
  Discount\t\t\t\tTk.{self.discount}
  Net Pay\t\t\t\tTk{self.net_pay}
 {str("=" * 47)}\n         
@@ -545,10 +548,18 @@ Amount\t\tTk.{self.bill_amnt}
         if self.chk_print == 1:
             messagebox.showinfo('Print', "Please wait while printing", parent=self.root)
             new_file = tempfile.mktemp('.txt')
-            open(new_file, 'w').write(self.txt_bill_area.get('1.0', END))
-            os.startfile(new_file, 'print')
-        else:
-            messagebox.showerror('Print', "Please generate Bill, to print Receipt ", parent=self.root)
+            with open(new_file, 'w') as file:
+                file.write(self.txt_bill_area.get('1.0', 'end'))
+
+            if platform.system() == 'Windows':
+                import os
+                os.startfile(new_file, 'print')
+            elif platform.system() == 'Darwin':  # macOS
+                subprocess.call(['open', new_file])
+            elif platform.system() == 'Linux':
+                subprocess.call(['xdg-open', new_file])
+            else:
+                messagebox.showerror('Error', 'Printing is not supported on this operating system')
 
     def logout(self):
         self.root.destroy()
