@@ -66,6 +66,7 @@ class BillClass:
             .place(x=285, y=10, width=100, height=25))
 
         # --------------Product Details Frame------------------
+
         ProductFrame3 = Frame(ProductFrame1, bd=3, relief=RIDGE)
         ProductFrame3.place(x=2, y=140, width=395, height=375)
 
@@ -79,7 +80,7 @@ class BillClass:
         scrollx.config(command=self.product_Table.xview)
         scrolly.config(command=self.product_Table.yview)
 
-        self.product_Table.heading("pid", text="PID")
+        self.product_Table.heading("pid", text="P.ID")
         self.product_Table.heading("name", text="Name")
         self.product_Table.heading("price", text="Price")
         self.product_Table.heading("qty", text="QTY")
@@ -199,7 +200,7 @@ class BillClass:
         # --------------Cart Frame------------------
         Cart_Frame = Frame(Cal_Cart_Frame, bd=3, relief=RIDGE)
         Cart_Frame.place(x=300, y=8, width=320, height=342)
-        self.cartTitle = Label(Cart_Frame, text="Cart  Total Products:[0]", font=("goudy old style", 10),
+        self.cartTitle = Label(Cart_Frame, text="Total Products:[0]",
                                bg="lightgray")
         self.cartTitle.pack(side=TOP, fill=X)
 
@@ -235,20 +236,23 @@ class BillClass:
         Add_CartWidgetsFrame = Frame(self.root, bd=2, relief=RIDGE, bg="white")
         Add_CartWidgetsFrame.place(x=420, y=550, width=530, height=110)
 
-        lbl_p_name = Label(Add_CartWidgetsFrame, text="Product Name", font=("times new roman", 15), bg="white").place(
-            x=5, y=5)
-        txt_p_name = Entry(Add_CartWidgetsFrame, textvariable=self.var_pname, font=("times new roman", 15),
-                           bg="lightyellow", state='readonly').place(x=5, y=35, width=190, height=22)
+        lbl_p_name = (Label(Add_CartWidgetsFrame, text="Product Name", font=("times new roman", 15), bg="white")
+                      .place(x=5, y=5))
+        txt_p_name = (Entry(Add_CartWidgetsFrame, textvariable=self.var_pname, font=("times new roman", 15),
+                           bg="lightyellow", state='readonly')
+                      .place(x=5, y=35, width=190, height=22))
 
-        lbl_p_price = Label(Add_CartWidgetsFrame, text="Price per Qty", font=("times new roman", 15), bg="white").place(
-            x=230, y=5)
-        txt_p_price = Entry(Add_CartWidgetsFrame, textvariable=self.var_price, font=("times new roman", 15),
-                            bg="lightyellow", state='readonly').place(x=230, y=35, width=150, height=22)
+        lbl_p_price = (Label(Add_CartWidgetsFrame, text="Price per Qty", font=("times new roman", 15), bg="white")
+           .place( x=230, y=5))
+        txt_p_price = (Entry(Add_CartWidgetsFrame, textvariable=self.var_price, font=("times new roman", 15),
+                            bg="lightyellow", state='readonly')
+                       .place(x=230, y=35, width=150, height=22))
 
-        lbl_p_qty = Label(Add_CartWidgetsFrame, text="Quantity", font=("times new roman", 15), bg="white").place(x=390,
-                                                                                                                 y=5)
-        txt_p_qty = Entry(Add_CartWidgetsFrame, textvariable=self.var_qty, font=("times new roman", 15),
-                          bg="lightyellow").place(x=390, y=35, width=120, height=22)
+        lbl_p_qty = (Label(Add_CartWidgetsFrame, text="Quantity", font=("times new roman", 15), bg="white")
+                     .place(x=390,y=5))
+        txt_p_qty = (Entry(Add_CartWidgetsFrame, textvariable=self.var_qty, font=("times new roman", 15),
+                          bg="lightyellow")
+                     .place(x=390, y=35, width=120, height=22))
 
         self.lbl_inStock = Label(Add_CartWidgetsFrame, text="In Stock", font=("times new roman", 15), bg="white")
         self.lbl_inStock.place(x=5, y=70)
@@ -563,6 +567,7 @@ Bill No. {str(self.invoice)}\t\t\tDate: {str(time.strftime("%d/%m/%Y"))}
 
     def logout(self):
         self.root.destroy()
+        os.system("python login.py")
 
 
 if __name__ == "__main__":
