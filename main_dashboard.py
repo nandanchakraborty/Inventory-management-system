@@ -106,62 +106,77 @@ class InventoryManagementSystem:
                                font=("goudy old style", 20, "bold"))
 
         self.lbl_sales.place(x=650, y=300, height=150, width=300)
+        self.update_content()
 
-        self.update_clock()
-
-    def update_clock(self):
-        """
-        function to update the date and time
-        """
-        current_date_time = datetime.now()
-        current_time = current_date_time.strftime('%I:%M:%S %p')  # 12-hour format with AM/PM
-        current_date = current_date_time.strftime('%d-%m-%Y')
-        self.lbl_clock.config(text=f"Welcome to Inventory Management System\t\tDate: {current_date}\t\
-         Time: {current_time}")
-        self.root.after(1000, self.update_clock)  # Update
+    def destroy_previous_window(self):
+        if hasattr(self, 'new_win') and self.new_win:
+            self.new_win.destroy()
 
     # #====================================
     def employee(self):
+        self.destroy_previous_window()
         self.new_win = Toplevel(self.root)
         self.new_obj = EmployeeClass(self.new_win)
 
     def supplier(self):
+        self.destroy_previous_window()
         self.new_win = Toplevel(self.root)
         self.new_obj = SupplierClass(self.new_win)
 
     def Category(self):
+        self.destroy_previous_window()
         self.new_win = Toplevel(self.root)
         self.new_obj = CategoryClass(self.new_win)
 
     def product(self):
+        self.destroy_previous_window()
         self.new_win = Toplevel(self.root)
         self.new_obj = ProductClass(self.new_win)
 
     def sales(self):
+        self.destroy_previous_window()
         self.new_win = Toplevel(self.root)
         self.new_obj = SalesClass(self.new_win)
 
-    def get_table_data_count(self):
-        """
-        function to get total number of Employee, Supplier etc
-        """
+    def update_content(self):
         con = sqlite3.connect(database=r'ims.db')
         cur = con.cursor()
-        total_employee = 0
-        total_supplier = 0
-
         try:
-            total_employee = cur.execute("SELECT COUNT(*) FROM Employee").fetchone()[0]
-            total_supplier = cur.execute("SELECT COUNT(*) FROM supplier").fetchone()[0]
-            total_category = cur.execute("SELECT COUNT(*) FROM Category").fetchone()[0]
-        except Exception as e:
-            pass
-        finally:
-            con.close()
-        return total_employee, total_supplier
+            cur.execute("select * from product")
+            product = cur.fetchall()
+            self.lbl_product.config(text=f'Total Products\n[{str(len(product))}]')
+
+            cur.execute("select * from supplier")
+            supplier = cur.fetchall()
+            self.lbl_supplier.config(text=f'Total Suppliers\n[{str(len(supplier))}]')
+
+            cur.execute("select * from category")
+            category = cur.fetchall()
+            self.lbl_category.config(text=f'Total Categories\n[{str(len(category))}]')
+
+            cur.execute("select * from employee")
+            employee = cur.fetchall()
+            self.lbl_employee.config(text=f'Total Employees\n[{str(len(employee))}]')
+            Bill = len(os.listdir('Bill'))
+            self.lbl_sales.config(text=f'Total Sales\n [{str(Bill)}]')
+
+            """
+            function to update the date and time
+            """
+            current_date_time = datetime.now()
+            current_time = current_date_time.strftime('%I:%M:%S %p')  # 12-hour format with AM/PM
+            current_date = current_date_time.strftime('%d-%m-%Y')
+            self.lbl_clock.config(text=f"Welcome to Inventory Management System\t\tDate: {current_date}\t\
+             Time: {current_time}")
+            self.root.after(200, self.update_content)  # Update
+
+
+        except Exception as ex:
+            messagebox.showerror("Error", f"Error due to : {str(ex)}", parent=self.root)
 
     def logout(self):
         self.root.destroy()
+        os.system("python login.py")
 
 
 if __name__ == "__main__":
