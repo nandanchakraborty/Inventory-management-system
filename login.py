@@ -7,8 +7,11 @@ import email_pass
 import smtplib
 import time
 
+from main_dashboard import InventoryManagementSystem
+from bill import BillClass
 
-class Login_System:
+
+class LoginSystem:
     def __init__(self, root):
         self.lbl_change_image = None
         self.root = root
@@ -95,12 +98,29 @@ class Login_System:
                     # print(user)
                     if user[0] == "Admin":
                         self.root.destroy()
-                        os.system("python main_dashboard.py")
-                    else:
+                        self.open_admin_dashboard()
+                    elif user[0] == "Employee":
                         self.root.destroy()
-                        os.system("python bill.py")
+                        self.open_bill_dashboard()
+
+                        # os.system("python bill.py")
         except Exception as ex:
             messagebox.showerror("Error", f"Error due to : {str(ex)}", parent=self.root)
+
+    def open_admin_dashboard(self):
+        r = Tk()
+        InventoryManagementSystem(r)
+        r.mainloop()
+
+    def open_bill_dashboard(self):
+        r = Tk()
+        BillClass(r)
+        r.mainloop()
+    def is_logged_in(self):
+        return self.logged_in
+
+    def get_user_type(self):
+        return self.user_type
 
     def forget_window(self):
         con = sqlite3.connect(database=r'ims.db')
@@ -201,5 +221,5 @@ class Login_System:
 
 
 root = Tk()
-obj = Login_System(root)
+obj = LoginSystem(root)
 root.mainloop()
