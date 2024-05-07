@@ -184,7 +184,7 @@ class EmployeeClass:
             else:
                 cur.execute("select *from employee where eid=?", (self.var_emp_id.get(),))
                 row = cur.fetchone()
-                if row != None:
+                if row is not None:
                     messagebox.showerror("Error", "This Id already assigned,try different", parent=self.root)
                 else:
                     cur.execute(
@@ -299,7 +299,7 @@ class EmployeeClass:
                     messagebox.showerror("Error", "Invalid Employee ID", parent=self.root)
                 else:
                     op = messagebox.askyesno("Confirm", "Delete Employee?", parent=self.root)
-                    if op == True:
+                    if op:
                         cur.execute("delete from employee where eid=?", (self.var_emp_id.get(),))
                         con.commit()
                         messagebox.showinfo("Delete", "Employee Deleted Successfully", parent=self.root)
@@ -354,7 +354,7 @@ class EmployeeClass:
                 if len(rows) != 0:
                     self.EmployeeTable.delete(*self.EmployeeTable.get_children())
                     for row in rows:
-                        print('-------', row)
+                       
                         self.EmployeeTable.insert('', END, values=row)
                 else:
                     messagebox.showerror("Error", "No record found !!!", parent=self.root)
