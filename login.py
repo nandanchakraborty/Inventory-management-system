@@ -60,7 +60,7 @@ class LoginSystem:
         register_frame = Frame(self.root, bd=2, relief=RIDGE, bg="#aaa9ad")
         register_frame.place(x=680, y=550, width=350, height=80)
 
-        lbl_reg = Label(register_frame, text="BUBT HARDWARE", font=("times new roman", 13), bg="#aaa9ad").place(x=100,
+        lbl_reg = Label(register_frame, text=" ", font=("times new roman", 13), bg="#aaa9ad").place(x=100,
                                                                                                                 y=20)
 
         self.im1=ImageTk.PhotoImage(file="images/im1.png")
