@@ -409,7 +409,7 @@ class BillClass:
                 op = messagebox.askyesno('confirm',
                                          "Product already present\nDo you want to Update| Remove from the Cart List",
                                          parent=self.root)
-                if op == True:
+                if op:
                     if self.var_qty.get() == "0":
                         self.cart_list.pop(index_)
                     else:
@@ -447,6 +447,12 @@ class BillClass:
     def generate_bill(self):
         if self.var_cname.get() == '' or self.var_contact.get() == '':
             messagebox.showerror("Error", f"Customer Details are Required", parent=self.root)
+
+        elif not self.var_contact.get().startswith("01") or not self.var_contact.get().isdigit() or len(
+                self.var_contact.get()) != 11:
+            messagebox.showerror("Error", "Contact number must start with '01' and contain 11 digits",
+                                 parent=self.root)
+
         elif len(self.cart_list) == 0:
             messagebox.showerror("Error", f"Please Add Product to the Cart", parent=self.root)
         else:
@@ -457,7 +463,10 @@ class BillClass:
             # --------------------Bill Bottom--------------------------
             self.bill_bottom()
 
-            fp = open(f'Bill/{str(self.invoice)}.txt', 'w')
+            customer_name = self.var_cname.get()  # Get customer name
+            file_name = f'Bill/{customer_name}.txt'  # Generate file name using customer name
+
+            fp = open(file_name, 'w')
             fp.write(self.txt_bill_area.get('1.0', END))
             fp.close()
             messagebox.showinfo('Saved', "Bill has been Saved", parent=self.root)
@@ -466,7 +475,7 @@ class BillClass:
     def bill_top(self):
         self.invoice = int(time.strftime("%H%M%S")) + int(time.strftime("%d%m%Y"))
         bill_top_temp = f'''
-\t\tBUBT HARDWARE
+\t\tFRIENDS HARDWARE
 \t Phone No. 0712345678, DHAKA-1234
 {str("=" * 47)}
 Customer Name: {self.var_cname.get()}
