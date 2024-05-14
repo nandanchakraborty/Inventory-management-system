@@ -11,7 +11,7 @@ def generate_fake_admin():
     contact = fake.phone_number()
     dob = fake.date_of_birth().strftime('%Y-%m-%d')
     doj = fake.date_time_this_decade().strftime('%Y-%m-%d %H:%M:%S')
-    password = fake.password(length=8)
+    password = fake.password(length=4)
     utype = random.choice(['Admin'])
     address = fake.address()
     salary = round(random.uniform(20000, 80000), 2)
