@@ -112,22 +112,22 @@ class EmployeeClass:
         self.txt_address = Text(self.root, font=employee_form_font, bg="lightyellow")
         self.txt_address.place(x=150, y=270, width=300, height=60)
         self.txt_salary = Entry(self.root, textvariable=self.var_salary, font=employee_form_font,
-                           bg="lightyellow")
+                                bg="lightyellow")
         self.txt_salary.place(x=600, y=270, width=180)
         # ===buttons====
 
         btn_add = (Button(self.root, text="Save", command=self.add, font=employee_form_font, bg="#2196f3",
-                         fg="white", cursor="hand2")
+                          fg="white", cursor="hand2")
                    .place(x=500, y=305, width=110, height=28))
         btn_update = (Button(self.root, text="Update", command=self.update, font=employee_form_font, bg="#4caf50",
-                            fg="white", cursor="hand2")
+                             fg="white", cursor="hand2")
                       .place(x=620, y=305, width=110, height=28))
         btn_delete = (Button(self.root, text="Delete", command=self.delete, font=employee_form_font, bg="#f44336",
-                            fg="white", cursor="hand2")
+                             fg="white", cursor="hand2")
                       .place(x=740, y=305, width=110, height=28))
         btn_clear = (Button(self.root, text="Clear", command=self.clear_input_field, font=employee_form_font,
-                           bg="#607d8b", fg="white", cursor="hand2")
-                      .place(x=860, y=305, width=110, height=28))
+                            bg="#607d8b", fg="white", cursor="hand2")
+                     .place(x=860, y=305, width=110, height=28))
 
         #====employee_details====
         emp_frame = Frame(self.root, bd=3, relief=RIDGE)
@@ -181,6 +181,10 @@ class EmployeeClass:
         try:
             if self.var_emp_id.get() == "":  #can add any validation
                 messagebox.showerror("Error", "Employee ID  Must be required", parent=self.root)
+            elif not self.var_contact.get().startswith("01") or not self.var_contact.get().isdigit() or len(
+                    self.var_contact.get()) != 11:
+                messagebox.showerror("Error", "Contact number must start with '01' and contain 11 digits",
+                                     parent=self.root)
             else:
                 cur.execute("select *from employee where eid=?", (self.var_emp_id.get(),))
                 row = cur.fetchone()
@@ -251,6 +255,12 @@ class EmployeeClass:
             #  can add any validation
             if self.var_emp_id.get() == "":
                 messagebox.showerror("Error", "Employee ID  Must be required", parent=self.root)
+
+            elif not self.var_contact.get().startswith("01") or not self.var_contact.get().isdigit() or len(
+                    self.var_contact.get()) != 11:
+                messagebox.showerror("Error", "Contact number must start with '01' and contain 11 digits",
+                                     parent=self.root)
+
             else:
                 emp_id = self.var_emp_id.get()
                 cur.execute("select *from employee where eid=?", (emp_id,))
@@ -335,7 +345,6 @@ class EmployeeClass:
         # self.txt_search.insert(END, '')
         self.var_searchtxt.set('')
 
-
     def search(self):
         con = sqlite3.connect(database=r'ims.db')
         cur = con.cursor()
@@ -354,7 +363,6 @@ class EmployeeClass:
                 if len(rows) != 0:
                     self.EmployeeTable.delete(*self.EmployeeTable.get_children())
                     for row in rows:
-                       
                         self.EmployeeTable.insert('', END, values=row)
                 else:
                     messagebox.showerror("Error", "No record found !!!", parent=self.root)
