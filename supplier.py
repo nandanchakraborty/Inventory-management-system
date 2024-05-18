@@ -6,9 +6,7 @@ import sqlite3
 class SupplierClass:
 
 
-    """
-    class for employee
-    """
+
 
     def __init__(self, r):
         employee_form_font = ("goudy old style", 15)
@@ -30,9 +28,9 @@ class SupplierClass:
         # ====search_frame=====
         
         # ==options===
-        self.lbl_search = Label(self.root, text=" Invoice number",bg="white",
+        self.lbl_search = Label(self.root, text=" Supplier ID",bg="white",
                                 font=("times new roman", 15))
-        self.lbl_search.place(x=550, y=80)
+        self.lbl_search.place(x=580, y=80)
 
 
         self.txt_search = Entry(self.root, font=("goudy old style", 15),
@@ -48,7 +46,7 @@ class SupplierClass:
 
         # ===content===
         # ====row1=====
-        lbl_supplier_invoice = Label(self.root, text="Invoice No", font=employee_form_font, bg="white")
+        lbl_supplier_invoice = Label(self.root, text="Supplier ID", font=employee_form_font, bg="white")
         lbl_supplier_invoice.place(x=50, y=80)
         txt_supplier_invoice = Entry(self.root, textvariable=self.var_sup_invoice, font=employee_form_font,
                              bg="lightyellow")
@@ -97,7 +95,7 @@ class SupplierClass:
         scrollx.config(command=self.SupplierTable.xview)
         scrollx.config(command=self.SupplierTable.yview)
 
-        self.SupplierTable.heading("invoice", text="Invoice no")
+        self.SupplierTable.heading("invoice", text="Supplier ID")
         self.SupplierTable.heading("name", text="Name")
         self.SupplierTable.heading("contact", text="Contact")
         self.SupplierTable.heading("desc", text="Description")
@@ -118,33 +116,37 @@ class SupplierClass:
         con = sqlite3.connect(database=r'ims.db')
         cur = con.cursor()
         try:
-            if self.var_sup_invoice.get() == "":  #can add any validation
+            if self.var_sup_invoice.get() == "":
                 messagebox.showerror("Error", "Invoice must be required", parent=self.root)
+            elif not self.var_contact.get().startswith("01") or not self.var_contact.get().isdigit() or len(
+                    self.var_contact.get()) != 11:
+                messagebox.showerror("Error", "Contact number must start with '01' and contain 11 digits",
+                                     parent=self.root)
             else:
-                cur.execute("select *from supplier where invoice=?", (self.var_sup_invoice.get(),))
+                cur.execute("SELECT * FROM supplier WHERE invoice=?", (self.var_sup_invoice.get(),))
                 row = cur.fetchone()
-                if row != None:
-                    messagebox.showerror("Error", "This Invoice No. already assigned,try different", parent=self.root)
+                if row is not None:
+                    messagebox.showerror("Error", "This Invoice No. already assigned, try different", parent=self.root)
                 else:
                     cur.execute(
-                        "Insert into supplier( invoice,name,contact,description) "
-                        "values(?,?,?,?)",
+                        "INSERT INTO supplier (invoice, name, contact, description) "
+                        "VALUES (?, ?, ?, ?)",
                         (
                             self.var_sup_invoice.get(),
                             self.var_name.get(),
                             self.var_contact.get(),
                             self.txt_desc.get('1.0', END)
-
                         ))
                     con.commit()
                     messagebox.showinfo("Success", "Supplier Added Successfully", parent=self.root)
                     self.show()
                     self.clear_input_field()
-                    con.close()
+        except sqlite3.Error as e:
+            messagebox.showerror("Error", f"Error occurred: {str(e)}", parent=self.root)
+        finally:
+            con.close()
 
-        except Exception as ex:
-            messagebox.showerror("Error", f"Error due to :  {str(ex)}", parent=self.root)
-            self.show()
+
 
     def show(self):
         con = sqlite3.connect(database=r'ims.db')
@@ -180,6 +182,11 @@ class SupplierClass:
             #  can add any validation
             if self.var_sup_invoice.get() == "":
                 messagebox.showerror("Error", "Invoice No. Must be required", parent=self.root)
+
+            elif not self.var_contact.get().startswith("01") or not self.var_contact.get().isdigit() or len(
+                    self.var_contact.get()) != 11:
+                messagebox.showerror("Error", "Contact number must start with '01' and contain 11 digits",
+                                     parent=self.root)
             else:
                 emp_id = self.var_sup_invoice.get()
                 cur.execute("select *from supplier where invoice=?", (emp_id,))
