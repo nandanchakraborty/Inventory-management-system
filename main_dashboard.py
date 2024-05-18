@@ -10,7 +10,7 @@ from employee import EmployeeClass
 from supplier import SupplierClass
 from Category import CategoryClass
 from product import ProductClass
-from sales import SalesClass
+from sales   import SalesClass
 
 
 class InventoryManagementSystem:
