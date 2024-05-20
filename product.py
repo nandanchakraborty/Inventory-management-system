@@ -50,7 +50,7 @@ class ProductClass:
         lbl_supplier.place(x=30, y=110)
         lbl_product_name = Label(product_Frame, text="Name", font=employee_form_font, bg="white")
         lbl_product_name.place(x=30, y=160)
-        lbl_price = Label(product_Frame, text="Price", font=employee_form_font, bg="white")
+        lbl_price = Label(product_Frame, text="Price(P.U)", font=employee_form_font, bg="white")
         lbl_price.place(x=30, y=210)
         lbl_quantity = Label(product_Frame, text="Quantity", font=employee_form_font, bg="white")
         lbl_quantity.place(x=30, y=260)
@@ -329,7 +329,6 @@ class ProductClass:
             elif self.txt_search.get() == "":
                 messagebox.showerror("Error", "Search input should be required", parent=self.root)
             else:
-                print('-------', self.var_searchtxt.get())
                 # cur.execute(
                 #     "select * from employee where " + self.var_searchby.get() + "LIKE '%" + self.var_searchtxt.get() + "%'")
                 cur.execute(
@@ -338,7 +337,6 @@ class ProductClass:
                 if len(rows) != 0:
                     self.ProductTable.delete(*self.ProductTable.get_children())
                     for row in rows:
-                        print('-------', row)
                         self.ProductTable.insert('', END, values=row)
                 else:
                     messagebox.showerror("Error", "No record found !!!", parent=self.root)
