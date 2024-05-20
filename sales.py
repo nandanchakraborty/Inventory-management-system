@@ -32,8 +32,8 @@ class SalesClass:
                            font=employee_form_font, bg="#184a45",
                            fg="white", bd=3, relief=RIDGE)
                      .pack(side=TOP, fill=X, padx=10, pady=20))
-        lbl_invoice = (Label(self.root, text="Invoice No.", font=("times new roman", 15), bg="white")
-                       .place(x=50, y=100))
+        lbl_invoice = (Label(self.root, text="Customer Name", font=("times new roman", 15), bg="white")
+                       .place(x=20, y=100))
         txt_invoice = (Entry(self.root, textvariable=self.var_invoice, font=("times new roman", 15), bg="lightyellow")
                        .place(x=160, y=100, width=180, height=28))
         btn_search = (Button(self.root, text="Search", command=self.search, font=("times new roman", 15, "bold"), bg="#2196fc", fg="white",
