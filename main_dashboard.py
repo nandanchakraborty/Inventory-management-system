@@ -77,7 +77,7 @@ class InventoryManagementSystem:
                            anchor="w",
                            font=("times new roman", 20, "bold"), bg="white", bd=3, cursor="hand2")
         btn_sales.pack(side=TOP, fill=X)
-        btn_exit = Button(leftMenu, text="Exit", image=self.icon_side, compound=LEFT, padx=5, anchor="w",
+        btn_exit = Button(leftMenu, text="Exit",command=self.exit, image=self.icon_side, compound=LEFT, padx=5, anchor="w",
                           font=("times new roman", 20, "bold"), bg="white", bd=3, cursor="hand2")
         btn_exit.pack(side=TOP, fill=X)
 
@@ -177,6 +177,9 @@ class InventoryManagementSystem:
     def logout(self):
         self.root.destroy()
         os.system("python login.py")
+
+    def exit(self):
+        self.root.destroy()
 
 
 if __name__ == "__main__":
