@@ -97,7 +97,7 @@ class SalesClass:
 
     def search(self):
         if self.var_invoice.get() == "":
-            messagebox.showerror("Error", "Invoice number should be required")
+            messagebox.showerror("Error", "Customer name  should be required")
         else:
             if self.var_invoice.get() in self.bill_list:
                 fp = open(f'Bill/{self.var_invoice.get()}.txt', 'r')
@@ -106,7 +106,7 @@ class SalesClass:
                     self.bill_area.insert(END, i)
                 fp.close()
             else:
-                messagebox.showerror("error","Invalid Invoice number",parent= self.root)
+                messagebox.showerror("error","Invalid Customer  name",parent= self.root)
 
             self.var_invoice.set('')
 
